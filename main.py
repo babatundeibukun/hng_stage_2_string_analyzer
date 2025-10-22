@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 from datetime import datetime, timezone
 from hashlib import sha256
 import json, os, re
+import uvicorn
 
 app = FastAPI(title="HNG Stage 1 — String Analyzer API")
 
@@ -186,3 +187,7 @@ def delete_string(string_value: str):
     del data[hash_value]
     save_data(data)
     return JSONResponse(status_code=204, content=None)
+
+if __name__ == "_main_":
+    port = int(os.environ.get("PORT", 8000))  # Railway provides PORT dynamically
+    uvicorn.run("main:app", host="0.0.0.0",port=port)
