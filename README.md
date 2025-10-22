@@ -32,7 +32,7 @@ It also supports advanced **filtering**, including **natural language queries** 
 }
 
 
-Response:
+Response: 
 {
   "id": "sha256_hash_value",
   "value": "string to analyze",
@@ -48,9 +48,7 @@ Response:
 }
 
 2️⃣ Get Specific String
-
 GET /strings/{string_value}
-
 Response:
 
 {
@@ -59,4 +57,68 @@ Response:
   "properties": { ... },
   "created_at": "2025-10-21T10:00:00Z"
 }
+
+
+3️⃣ Get All Strings (with Filtering)
+GET /strings
+Query Parameters:
+Parameter	Type	Description
+is_palindrome	boolean	Filter by palindrome status
+min_length	integer	Minimum string length
+max_length	integer	Maximum string length
+word_count	integer	Exact number of words
+contains_character	string	Filter strings containing a character
+
+4️⃣ Natural Language Filtering
+GET /strings/filter-by-natural-language?query=your%20query
+Examples:
+/strings/filter-by-natural-language?query=all%20single%20word%20palindromic%20strings
+/strings/filter-by-natural-language?query=strings%20longer%20than%2010%20characters
+/strings/filter-by-natural-language?query=strings%20containing%20the%20letter%20z
+Response:
+
+{
+  "data": [ ... ],
+  "count": 3,
+  "interpreted_query": {
+    "original": "all single word palindromic strings",
+    "parsed_filters": {
+      "word_count": 1,
+      "is_palindrome": true
+    }
+  }
+}
+
+5️⃣ Delete String
+DELETE /strings/{string_value}
+Deletes a specific string from the database.
+Returns 204 No Content on success.
+
+
+⚙️ Setup Instructions
+🧩 Prerequisites
+Ensure you have the following installed:
+Python 3.9+
+Git
+
+📦 Installation
+# Clone the repository
+git clone https://github.com/<your-username>/<your-repo-name>.git
+cd <your-repo-name>
+
+# Create and activate a virtual environment
+python -m venv venv
+# Windows
+venv\Scripts\activate
+# macOS/Linux
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+
+
+
+
+
 
